@@ -311,7 +311,7 @@ async function updateExpense() {
   await db.update(id, year.value, month.value, day.value, type.value, description.value, val.value)
 
   await $('#modal').modal('hide')
-  // Disparar alerta no caso de mudança
+  // Precisamos disparar o alert antes do reload
   messageAlert('success', 'Despesa atualizada com sucesso!')
   setTimeout(() => {
     document.location.reload()
