@@ -1,9 +1,9 @@
 // Models da aplicação
 class Expense {
-  constructor(id, year, month, day, type, description, val) {
+  constructor(id, day, type, description, val) {
       this.id = id,
-      this.year = year,
-      this.month = month,
+      //this.year = year,
+     // this.month = month,
       this.day = day,
       this.type = type,
       this.description = description,
@@ -105,20 +105,21 @@ class DB {
     localStorage.removeItem(id)
   }
 
-  update(_id, _year, _month, _day, _type, _description, _val) {
+  update(_id, // _year, _month,
+   _day, _type, _description, _val) {
     let expenseToUpdate = this.getExpense(_id)
     let {
       id,
-      year,
-      month,
       day,
+     // year,
+     // month,
       type,
       description,
       val,
     } = expenseToUpdate
     // Compara se os valores foram alterados
-      year = year == _year ? year : _year
-      month = month == _month ? month : _month
+      // year = year == _year ? year : _year
+      // month = month == _month ? month : _month
       day = day == _day ? day : _day
       type = type == _type ? type : _type
       description = description == _description ? description : _description
@@ -126,8 +127,8 @@ class DB {
     
     let expense = {
       id,
-      year,
-      month,
+    // year,
+    // month,
       day,
       type,
       description,
@@ -144,8 +145,8 @@ let db = new DB()
 
 // Cadastrando nova despesa
 function registerExpense() {
-  let year = document.querySelector('#year') // Acessando os elementos do formulário
-  let month = document.querySelector('#month')
+  //let year = document.querySelector('#year') // Acessando os elementos do formulário
+  //let month = document.querySelector('#month')
   let day = document.querySelector('#day')
   let type = document.querySelector('#type')
   let description = document.querySelector('#description')
@@ -153,8 +154,8 @@ function registerExpense() {
 
   let expense = new Expense(
     db.getId(),
-    year.value,
-    month.value,
+    //year.value,
+    //month.value,
     day.value,
     type.value,
     description.value,
@@ -165,8 +166,8 @@ function registerExpense() {
     db.setStorage(expense)
     messageAlert('success', 'Despesa cadastrada com sucesso!')
     // Limpando os campos do formulário
-    year.value = ''
-    month.value = ''
+    //year.value = ''
+    //month.value = ''
     day.value = ''
     type.value = ''
     description.value = ''
@@ -211,7 +212,7 @@ function getList(expense = [], filtred = false) {
     let row = tableExpenses.insertRow() // Insere linhas <tr> no body da tabela
 
     // Insere colunas <td> nas linhas <tr>
-    row.insertCell(0).innerHTML = `${el.day}/${el.month}/${el.year}`
+    row.insertCell(0).innerHTML = `${el.day}`
     // Tratativa do campo tipo
     switch (el.type) {
       case '1':
@@ -244,24 +245,33 @@ function getList(expense = [], filtred = false) {
         document.location.reload()
       }, 3000)
     }
-    row.insertCell(4).append(buttonDelete) // Alocando o elemento button na tabela
-
+    
     let buttonUpdate = document.createElement('button')
-    buttonUpdate.className = 'btn btn-primary'
+    buttonUpdate.className = 'btn btn-success '
     buttonUpdate.id = 'update'
-    buttonUpdate.innerHTML = '<i class="fas fa-plus"</i>'
+    buttonUpdate.innerHTML = '<i class="far fa-edit"</i>'
     buttonUpdate.onclick = async () => {
       await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
       $('#modal').modal('show') // Abre o modal
       sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
     }
-    row.insertCell(5).append(buttonUpdate)
+    row.insertCell(4).append(buttonDelete, " ", buttonUpdate) // Alocando o elemento button na tabela
+    // let buttonUpdate = document.createElement('button')
+    // buttonUpdate.className = 'btn btn-success '
+    // buttonUpdate.id = 'update'
+    // buttonUpdate.innerHTML = '<i class="far fa-edit"</i>'
+    // buttonUpdate.onclick = async () => {
+    //   await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
+    //   $('#modal').modal('show') // Abre o modal
+    //   sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
+    // }
+   // row.insertCell(5).append(buttonDelete)
   })
 }
 // Função que pesquisa as despesas
 function searchExpense() {
-  let year = document.querySelector('#year') // Acessando os elementos do formulário
-  let month = document.querySelector('#month')
+  //let year = document.querySelector('#year') // Acessando os elementos do formulário
+  //let month = document.querySelector('#month')
   let day = document.querySelector('#day')
   let type = document.querySelector('#type')
   let description = document.querySelector('#description')
@@ -269,8 +279,8 @@ function searchExpense() {
 
   let expense = new Expense(
     id = '',
-    year.value,
-    month.value,
+    //year.value,
+    //month.value,
     day.value,
     type.value,
     description.value,
@@ -289,8 +299,8 @@ async function showExpenseModal(id) {
     let expense = db.getExpense(id)
 
     let modal = $(this)
-    modal.find('#mYear').val(expense.year)
-    modal.find('#mMonth').val(expense.month)
+    //modal.find('#mYear').val(expense.year)
+    //modal.find('#mMonth').val(expense.month)
     modal.find('#mDay').val(expense.day)
     modal.find('#mType').val(expense.type)
     modal.find('#mDescription').val(expense.description)
@@ -300,15 +310,16 @@ async function showExpenseModal(id) {
 
 // Função que atualiza a despesa 
 async function updateExpense() {
-  let year = document.querySelector('#mYear') // Acessando os elementos do formulário
-  let month = document.querySelector('#mMonth')
+  //let year = document.querySelector('#mYear') // Acessando os elementos do formulário
+  //let month = document.querySelector('#mMonth')
   let day = document.querySelector('#mDay')
   let type = document.querySelector('#mType')
   let description = document.querySelector('#mDescription')
   let val = document.querySelector('#mVal')
   
   let id = sessionStorage.getItem('update') // retorna o "id" da despesa que vai ser atualizada
-  await db.update(id, year.value, month.value, day.value, type.value, description.value, val.value)
+  await db.update(id, //year.value, month.value, 
+    day.value, type.value, description.value, val.value)
 
   await $('#modal').modal('hide')
   // Precisamos mudar este comentário

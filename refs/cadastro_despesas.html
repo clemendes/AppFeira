@@ -86,39 +86,12 @@
       <div class="alert mr-5 fade" role="alert" id="messageAlert"></div>
   </div>
   <div class="container">
-    <div class="row">
-      <div class="col mb-5">
+    <div class="row mb-5">
+      <div class="col">
         <h2>Registro de nova despesa</h2>
       </div>
     </div>
-
-    <div class="row mb-2">
-      <div class="col-md-2">
-        <select class="form-control" id="year">
-          <option value="">Ano</option>
-          <option value="2018">2018</option>
-          <option value="2018">2019</option>
-        </select>
-      </div>
-
-      <div class="col-md-2">
-        <select class="form-control" id="month">
-          <option value="">Mês</option>
-          <option value="1">Janeiro</option>
-          <option value="2">Fevereiro</option>
-          <option value="3">Março</option>
-          <option value="4">Abril</option>
-          <option value="5">Maio</option>
-          <option value="6">Junho</option>
-          <option value="7">Julho</option>
-          <option value="8">Agosto</option>
-          <option value="9">Setembro</option>
-          <option value="10">Outubro</option>
-          <option value="11">Novembro</option>
-          <option value="12">Dezembro</option>
-        </select>
-      </div>
-
+<div class="row">
       <!-- Datepicker Formulario -->
         <div class="col-md-2">
         	<div class="form-group">
@@ -131,7 +104,7 @@
       		</div>
       	</div>
 
-      <div class="col-md-5">
+      <div class="col-md-4">
         <select class="form-control" id="type">
           <option value="">Tipo</option>
           <option value="1">Alimentação</option>
@@ -141,25 +114,25 @@
           <option value="5">Transporte</option>
         </select>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <input type="text" class="form-control" placeholder="Descrição" id="description" />
-      </div>
 
       <div class="col-md-2">
         <input type="text" class="form-control" placeholder="Valor" id="val" />
       </div>
+  </div>
 
-      <div class="col-md-2 d-flex justify-content-end">
+  <div class="row">
+  <!--   <div class="row mb-5"> -->
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="Descrição" id="description" />
+      </div>
+
+      <div class="col-md-1 d-flex justify-content-start">
         <button id="btnAdd" type="button" class="btn btn-primary" onclick="registerExpense()">
           <i class="fas fa-plus"></i>
         </button>
       </div>
-      <!-- Alert -->
-    </div>
-  </div>
+    <!-- </div> -->
+</div>
 
   <!-- Função e parametros Datepicker -->
   <script type="text/javascript">
