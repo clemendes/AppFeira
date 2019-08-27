@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+  <meta name="author" content="GeeksLabs">
+  <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+  <link rel="shortcut icon" href="img/favicon.png">
+
+  <title>Pocket Basic - Cadastro de Despesas</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- bootstrap theme -->
+  <link href="css/bootstrap-theme.css" rel="stylesheet">
+  <!--external css-->
+  <!-- font icon -->
+  <link href="css/elegant-icons-style.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+  <!-- javascripts -->
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <!-- nicescroll -->
+  <script src="js/jquery.scrollTo.min.js"></script>
+  <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+  <!--custome script for all page-->
+  <script src="js/scripts.js"></script>
+  <script src="refs/app.js"></script>
+  <!-- Links dos files para o Datepicker -->
+  <link href="refs/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+  <script src="refs/datepicker/js/bootstrap-datepicker.min.js"></script>
+  <script src="refs/datepicker/js/bootstrap-datepicker.pt-BR.min.js"></script>
+
+  <!-- Custom styles -->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet" />
+  <style type="text/css">
+    .teste{
+      padding: 0px!important;
+      margin: 0px!important;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- container section start -->
+  <section id="container" class="">
+    <header class="header dark-bg">
+      <div class="toggle-nav">
+        <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+      </div>
+
+      <!--logo start-->
+      <a href="index.html" class="logo">Pocket <span class="lite">Basic </span></a>
+      <!--logo end-->
+
+      <div class="top-nav notification-row">
+        <!-- notificatoin dropdown start-->
+        <ul class="nav pull-right top-menu">
+          <!-- user login dropdown start-->
+          <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="profile-ava">
+                                <img alt="" src="img/avatar1_small.jpg">
+                            </span>
+                            <span class="username">Usuário</span>
+                            <b class="caret"></b>
+                        </a>
+            <ul class="dropdown-menu extended logout">
+              <div class="log-arrow-up"></div>
+              <li class="eborder-top">
+                <a href="#"><i class="icon_profile"></i> My Profile</a>
+              </li>
+              <li>
+                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+              </li>
+            </ul>
+          </li>
+          <!-- user login dropdown end -->
+        </ul>
+        <!-- notificatoin dropdown end-->
+      </div>
+    </header>
+    <!--header end-->
+
+    <aside>
+      <div id="sidebar" class="nav-collapse " style="overflow: hidden; outline: none; cursor: -webkit-grab; margin-left: 0px;" tabindex="5000">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" style="display: block;">
+          <li class="active">
+            <a class="" href="index.html">
+                          <i class="icon_house_alt"></i>
+                          <span>Dashboard</span>
+                      </a>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="fa fa-money"></i>
+                          <span>Receitas</span>
+                          <span class="menu-arrow arrow_carrot-down arrow_carrot-right"></span>
+                      </a>
+            <ul class="sub" style="overflow: hidden; display: none;">
+              <li><a class="" href="cadastro_receitas.html">Cadastrar</a></li>
+              <li><a class="" href="consulta_receitas.html">Consultar | Editar</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="fa fa-shopping-cart"></i>
+                          <span>Despesas</span>
+                          <span class="menu-arrow arrow_carrot-down arrow_carrot-right"></span>
+                      </a>
+            <ul class="sub" style="overflow: hidden; display: none;">
+              <li><a class="" href="cadastro_despesas.html">Cadastrar</a></li>
+              <li><a class="" href="consulta_despesas.html">Consultar | Editar</a></li>
+
+            </ul>
+          </li>
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+
+    <!--main content start-->
+    <section id="main-content" style="margin-left: 180px;">
+      <section class="wrapper">
+        <!--overview start-->
+        <div class="row">
+          <div class="col-lg-12">
+            <ol class="breadcrumb">
+              <li><i class="fa fa-home"></i><a href="index.html"> Ínicio</a></li>
+              <li><i class="fa fa-laptop"></i> Cadastro Despesas</li>
+            </ol>
+          </div>
+        </div>
+
+        <!--Mensagem de alerta-->
+        <div class="d-flex flex-row-reverse bd-highlight">
+            <div class="alert mr-5 fade teste" role="alert" id="messageAlert"></div>
+        </div>
+        <!--Mensagem de alerta/-->
+        <br>
+        <div class="row">
+          <!-- Datepicker Formulario -->
+          <div class="col-md-2">
+            <div class="form-group">
+                <div class="input-group date">
+                      <input type="text" class="form-control" placeholder="Dia" id="day" >
+                      <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <select class="form-control" id="type">
+              <option value="">Tipo</option>
+              <option value="1">Alimentação</option>
+              <option value="2">Educação</option>
+              <option value="3">Lazer</option>
+              <option value="4">Saúde</option>
+              <option value="5">Transporte</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Valor" id="val" />
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Descrição" id="description" />
+          </div>
+          <div class="col-md-1 d-flex justify-content-start">
+            <button id="btnAdd" type="button" class="btn btn-primary" onclick="registerExpense()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <br>
+      </section>
+    </section>
+  <!-- container section end -->
+</section>
+
+  <!-- Função e parametros Datepicker -->
+  <script type="text/javascript">
+    $('#day').datepicker({
+      format: "dd/mm/yyyy",
+      language: "pt-BR",
+    });
+  </script>
+
+</body>
+
+</html>
