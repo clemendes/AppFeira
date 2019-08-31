@@ -1,4 +1,4 @@
-// Models da aplicação
+﻿// Models da aplicação
 class Expense {
   constructor(id, day, type, description, val) {
       this.id = id,
@@ -124,7 +124,7 @@ class DB {
       type = type == _type ? type : _type
       description = description == _description ? description : _description
       val = val == _val ? val : _val
-    
+
     let expense = {
       id,
     // year,
@@ -137,8 +137,8 @@ class DB {
     localStorage.setItem(`${id}`, JSON.stringify(expense))
   }
 }
-/*------------------------------ 
-    Controllers da aplicação 
+/*------------------------------
+    Controllers da aplicação
 */
 
 let db = new DB()
@@ -237,7 +237,7 @@ function getList(expense = [], filtred = false) {
 
     let buttonDelete = document.createElement('button')
     buttonDelete.className = 'btn btn-danger'
-    buttonDelete.innerHTML = `<i class="fas fa-trash"></i>`
+    buttonDelete.innerHTML = '<i class="fa fa-trash-o"></i>'
     buttonDelete.onclick = () => { // Função que vai deletar despesa
       db.delete(el.id)
       messageAlert('success', 'Despesa excluída com sucesso!')
@@ -245,29 +245,33 @@ function getList(expense = [], filtred = false) {
         document.location.reload()
       }, 3000)
     }
-    
+
     let buttonUpdate = document.createElement('button')
     buttonUpdate.className = 'btn btn-success '
     buttonUpdate.id = 'update'
-    buttonUpdate.innerHTML = '<i class="far fa-edit"</i>'
+    buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
     buttonUpdate.onclick = async () => {
       await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
       $('#modal').modal('show') // Abre o modal
       sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
     }
+
     row.insertCell(4).append(buttonDelete, " ", buttonUpdate) // Alocando o elemento button na tabela
+
     // let buttonUpdate = document.createElement('button')
     // buttonUpdate.className = 'btn btn-success '
     // buttonUpdate.id = 'update'
-    // buttonUpdate.innerHTML = '<i class="far fa-edit"</i>'
+    // buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
     // buttonUpdate.onclick = async () => {
     //   await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
     //   $('#modal').modal('show') // Abre o modal
     //   sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
     // }
    // row.insertCell(5).append(buttonDelete)
+
   })
 }
+
 // Função que pesquisa as despesas
 function searchExpense() {
   //let year = document.querySelector('#year') // Acessando os elementos do formulário
@@ -308,7 +312,7 @@ async function showExpenseModal(id) {
   }) // Abrindo o modal
 }
 
-// Função que atualiza a despesa 
+// Função que atualiza a despesa
 async function updateExpense() {
   //let year = document.querySelector('#mYear') // Acessando os elementos do formulário
   //let month = document.querySelector('#mMonth')
@@ -316,9 +320,9 @@ async function updateExpense() {
   let type = document.querySelector('#mType')
   let description = document.querySelector('#mDescription')
   let val = document.querySelector('#mVal')
-  
+
   let id = sessionStorage.getItem('update') // retorna o "id" da despesa que vai ser atualizada
-  await db.update(id, //year.value, month.value, 
+  await db.update(id, //year.value, month.value,
     day.value, type.value, description.value, val.value)
 
   await $('#modal').modal('hide')

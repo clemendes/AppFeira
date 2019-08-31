@@ -1808,11 +1808,11 @@ div[data-role="editor-toolbar"] {
 
 .info-box {
 
-  min-height: 140px;
+  min-height: 80px;
 
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
-  padding: 20px;
+  padding: 10px;
 
   color: white;
 
@@ -1828,21 +1828,23 @@ div[data-role="editor-toolbar"] {
 
   display: block;
 
-  height: 100px;
+  height: 60px;
 
-  font-size: 60px;
+  font-size: 30px;
 
-  line-height: 100px;
+  line-height: 70px;
 
-  width: 100px;
+  width: 35px;
 
   float: left;
 
   text-align: center;
 
-  margin-right: 20px;
+  margin-right: 10px;
 
-  padding-right: 20px;
+  margin-top: -10px;
+
+  padding-right: 10px;
 
   color: rgba(255, 255, 255, 0.75);
 
@@ -1850,9 +1852,9 @@ div[data-role="editor-toolbar"] {
 
 .info-box .count {
 
-  margin-top: 20px;
+  margin-top: 0px;
 
-  font-size: 34px;
+  font-size: 22px;
 
   font-weight: 700;
 
@@ -1860,11 +1862,11 @@ div[data-role="editor-toolbar"] {
 
 .info-box .title {
 
-  font-size: 12px;
+  font-size: 18px;
 
   text-transform: uppercase;
 
-  font-weight: 600;
+  font-weight: 350;
 
 }
 
