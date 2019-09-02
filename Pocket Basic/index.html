@@ -7,7 +7,7 @@
   <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
   <meta name="author" content="GeeksLabs">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-  <link rel="shortcut icon" href="img/favicon.png">
+  <!--<link rel="shortcut icon" href="img/favicon.png">-->
 
   <title>Pocket Basic - Ínicio</title>
 
@@ -20,19 +20,19 @@
   <link href="css/elegant-icons-style.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
-  <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+  <!--<link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+  <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet"> -->
   <!-- Custom styles -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
-  <link href="css/xcharts.min.css" rel=" stylesheet">
-  <link href="css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+  <!--<link href="css/xcharts.min.css" rel=" stylesheet">
+  <link href="css/jquery-ui-1.10.4.min.css" rel="stylesheet"> -->
 
   <!-- javascripts -->
   <script src="js/jquery.js"></script>
-  <script src="js/jquery-ui-1.10.4.min.js"></script>
   <script src="js/jquery-1.8.3.min.js"></script>
-  <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+  <!--<script src="js/jquery-ui-1.10.4.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>-->
   <!-- bootstrap -->
   <script src="js/bootstrap.min.js"></script>
   <!-- nice scroll -->
@@ -293,11 +293,87 @@ var myChart = new Chart(ctx, {
 <div class="col-sm-6">
     <canvas id="chartjs-4" class="chartjs" width="undefined" height="undefined"></canvas>
     <script>
-    new Chart(document.getElementById("chartjs-4"),{
-      "type":"doughnut",
-      "data":{"labels":["Alimentação", "Educação", "Lazer", "Saúde", "Transporte", "Outros"],
-      "datasets":[{"label":"","data":[300,50,100,70,40,20],
-      "backgroundColor":["rgba(255, 99, 132, 0.2)","rgba(54, 162, 235, 0.2)","rgba(255, 206, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(153, 102, 255, 0.2)","rgba(255, 159, 64, 0.2)"]}]}});</script>
+    // new Chart(document.getElementById("chartjs-4"),{
+    //   "type":"doughnut",
+    //   "data":{"labels":["Alimentação", "Educação", "Lazer", "Saúde", "Transporte", "Outros"],
+    //   "datasets":[{"label":"","data":[300,50,100,70,40,20],
+    //   "backgroundColor":["rgba(255, 99, 132, 0.2)","rgba(54, 162, 235, 0.2)","rgba(255, 206, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(153, 102, 255, 0.2)","rgba(255, 159, 64, 0.2)"]}]}});
+
+  //EM TESTES
+  //somando receitas
+  let soma_sl=0
+  let soma_ad=0
+  let soma_13=0
+  let soma_ap=0
+  let soma_ou=0
+
+  let dataR = []
+
+  let listaR  = db.getAllExpense() 
+  listaR.forEach(ls => {
+    if(ls.filtro == "receita"){
+      if(ls.type == "1"){
+        soma_sl += parseFloat(ls.val)
+      }
+      if(ls.type == "2"){
+        soma_ad += parseFloat(ls.val)
+      }
+          if(ls.type == "3"){
+        soma_13 += parseFloat(ls.val)
+      }
+          if(ls.type == "4"){
+        soma_ap += parseFloat(ls.val)
+      }
+          if(ls.type == "5"){
+        soma_ou += parseFloat(ls.val)
+      }
+    }  
+  })
+  dataR.push(soma_sl)
+  dataR.push(soma_ad)
+  dataR.push(soma_13)
+  dataR.push(soma_ap)
+  dataR.push(soma_ou)
+  console.log(dataR)
+//EM TESTE ATÉ AQUI /\
+
+var myChart = new Chart(document.getElementById("chartjs-4"), {
+    type: 'doughnut',
+    data: {
+        labels: ['Salário', 'Adiantamento', '13º Salário', 'Aplicações', 'Outros'],
+        datasets: [{
+            label: 'Valor de Despesas por Categoria',
+            data: dataR, //<- data array onde armazena a soma de cada tipo de despesa
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+})
+    </script>
 </div>
 
 </div>
