@@ -53,7 +53,7 @@
     </style>
   </head>
 
-  <body onload="getList()">
+  <body onload="getListDespesas()">
     <!-- container section start -->
     <section id="container" class="">
       <header class="header dark-bg">
@@ -121,7 +121,7 @@
                             <span>Despesas</span>
                             <span class="menu-arrow arrow_carrot-down arrow_carrot-right"></span>
                         </a>
-              <ul class="sub" style="overflow: hidden; display: none;">
+              <ul class="sub" style="">
                 <li><a class="" href="cadastro_despesas.html">Cadastrar</a></li>
                 <li><a class="" href="consulta_despesas.html">Consultar | Editar</a></li>
 
@@ -262,6 +262,7 @@
                     </div>
                   </div>
                 </div>
+                <input type="text" class="hidden" id="mFiltro" value="despesa" />
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                   <button type="button" class="btn btn-primary" onclick="updateExpense()">Salvar</button>

@@ -148,10 +148,10 @@
 
         <div class="row">
 
-          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <div class="info-box green-bg">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+            <div class="info-box green-bg" >
               <i class="fa fa-money"></i>
-              <div class="count">R$ 999.999.999</div>
+              <div class="count"  id="total_receitas" type="number" step="any">R$ 0.00</div>
               <div class="title">Receitas</div>
             </div>
             <!--/.info-box-->
@@ -161,7 +161,7 @@
           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <div class="info-box red-bg">
               <i class="fa fa-shopping-cart"></i>
-              <div class="count">R$ 999.999.999</div>
+              <div class="count" id="total_despesas" type="number" step="any">R$ 0.00</div>
               <div class="title">Despesas</div>
             </div>
             <!--/.info-box-->
@@ -171,30 +171,92 @@
           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <div class="info-box yellow-bg">
               <i class="fa fa-exchange"></i>
-              <div class="count">R$ 999.999.999</div>
+              <div class="count" id="balanco" type="number" step="any">R$ 0.00</div>
               <div class="title">Balanço</div>
             </div>
             <!--/.info-box-->
           </div>
           <!--/.col-->
           <!--/.col-->
+
+	<div class="form-group">
+                    <label class="control-label col-lg-2" for="inputSuccess">Período:</label>
+                    <div class="col-lg-3">
+                      <select class="form-control m-bot15">
+                                <option>Janeiro</option>
+                                <option>Fevereiro</option>
+                                <option>Março</option>
+                                <option>Abril</option>
+                                <option>Maio</option>
+		<option>Junho</option>
+		<option>Julho</option>
+		<option>Agosto</option>
+		<option>Setembro</option>
+		<option>Outubro</option>
+		<option>Novembro</option>
+		<option>Dezembro</option>
+                       </select>
+                    </div>
+                  </div>
+
         </div>
         <!--/.row-->
-
-
 
 <div class="row">
   <div class="col-sm-6">
     <canvas id="myChart" width="300" height="157"></canvas>
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
+  //EM TESTES
+  //somando receitas
+  let soma_al=0
+  let soma_ed=0
+  let soma_lz=0
+  let soma_sa=0
+  let soma_tr=0
+  let soma_ot=0
+
+  let data = []
+
+  let lista  = db.getAllExpense() 
+  lista.forEach(ls => {
+    if(ls.filtro == "despesa"){
+      if(ls.type == "1"){
+        soma_al += parseFloat(ls.val)
+      }
+      if(ls.type == "2"){
+        soma_ed += parseFloat(ls.val)
+      }
+          if(ls.type == "3"){
+        soma_lz += parseFloat(ls.val)
+      }
+          if(ls.type == "4"){
+        soma_sa += parseFloat(ls.val)
+      }
+          if(ls.type == "5"){
+        soma_tr += parseFloat(ls.val)
+      }
+          if(ls.type == "6"){
+        soma_ot += parseFloat(ls.val)
+      }
+    }  
+  })
+  data.push(soma_al)
+  data.push(soma_ed)
+  data.push(soma_lz)
+  data.push(soma_sa)
+  data.push(soma_tr)
+  data.push(soma_ot)
+  console.log(data)
+//EM TESTE ATÉ AQUI /\
+
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: ['Alimentação', 'Educação', 'Lazer', 'Saúde', 'Transporte', 'Outros'],
         datasets: [{
             label: 'Valor de Despesas por Categoria',
-            data: [100, 70, 54, 35, 15, 6],
+            data: data, //<- data array onde armazena a soma de cada tipo de despesa
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

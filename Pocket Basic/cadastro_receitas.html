@@ -111,7 +111,7 @@
                           <span>Receitas</span>
                           <span class="menu-arrow arrow_carrot-down arrow_carrot-right"></span>
                       </a>
-            <ul class="sub" style="overflow: hidden; display: none;">
+            <ul class="sub" style="">
               <li><a class="" href="cadastro_receitas.html">Cadastrar</a></li>
               <li><a class="" href="consulta_receitas.html">Consultar | Editar</a></li>
             </ul>
@@ -185,7 +185,7 @@
           <div class="col-md-6">
             <input type="text" class="form-control" placeholder="Descrição" id="description" />
           </div>
-          <!-- <input type="hidden" id="filtro" value="d" /> -->
+          <input type="text" class="hidden" id="filtro" value="receita" />
           <div class="col-md-1 d-flex justify-content-start">
             <button id="btnAdd" type="button" class="btn btn-primary" onclick="registerExpense()">
               <i class="fa fa-plus"></i>

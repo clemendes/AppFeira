@@ -53,7 +53,7 @@
     </style>
   </head>
 
-  <body onload="getList()">
+  <body onload="getListReceitas()">
     <!-- container section start -->
     <section id="container" class="">
       <header class="header dark-bg">
@@ -110,7 +110,7 @@
                             <span>Receitas</span>
                             <span class="menu-arrow arrow_carrot-down arrow_carrot-right"></span>
                         </a>
-              <ul class="sub" style="overflow: hidden; display: none;">
+              <ul class="sub" style="">
                 <li><a class="" href="cadastro_receitas.html">Cadastrar</a></li>
                 <li><a class="" href="consulta_receitas.html">Consultar | Editar</a></li>
               </ul>
@@ -180,8 +180,8 @@
                   <select class="form-control" id="type">
                     <option value="">Tipo</option>
                     <option value="1">Salário</option>
-                    <option value="2">13º Salário</option>
-                    <option value="3">Investimentos</option>
+                    <option value="2">Adiantamento</option>
+                    <option value="3">13º Salário</option>
                     <option value="4">Aplicações</option>
                     <option value="5">Outros</option>
                   </select>
@@ -198,7 +198,7 @@
                   </div>
 
                   <div class="col-md-1 d-flex justify-content-start">
-                    <button type="button" class="btn btn-primary" onclick="searchExpense()">
+                    <button type="button" class="btn btn-primary" onclick="searchReceita()">
                       <i class="fa fa-search"></i>
                     </button>
                   </div>
@@ -240,8 +240,8 @@
                       <select class="form-control" id="mType">
                         <option value="">Tipo</option>
                         <option value="1">Salário</option>
-                        <option value="2">13º Salário</option>
-                        <option value="3">Investimentos</option>
+                        <option value="2">Adiantamento</option>
+                        <option value="3">13º Salário</option>
                         <option value="4">Aplicações</option>
                         <option value="5">Outros</option>
                       </select>
@@ -260,6 +260,7 @@
                     </div>
                   </div>
                 </div>
+                <input type="text" class="hidden" id="mFiltro" value="receita" />
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                   <button type="button" class="btn btn-primary" onclick="updateExpense()">Salvar</button>
