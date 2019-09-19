@@ -1,9 +1,9 @@
 ﻿// Models da aplicação
 class Expense {
-  constructor(id, day, type, description, val, filtro) {
-      this.id = id,
-      //this.year = year,
-     // this.month = month,
+  constructor(id, year, month, day, type, description, val, filtro) {
+    this.id = id,
+      this.year = year,
+      this.month = month,
       this.day = day,
       this.type = type,
       this.description = description,
@@ -107,30 +107,30 @@ class DB {
   }
 
   update(_id, // _year, _month,
-   _day, _type, _description, _val, _filtro) {
+    _day, _type, _description, _val, _filtro) {
     let expenseToUpdate = this.getExpense(_id)
     let {
       id,
       day,
-     // year,
-     // month,
+      // year,
+      // month,
       type,
       description,
       val,
       filtro,
     } = expenseToUpdate
     // Compara se os valores foram alterados
-      // year = year == _year ? year : _year
-      // month = month == _month ? month : _month
-      day = day == _day ? day : _day
-      type = type == _type ? type : _type
-      description = description == _description ? description : _description
-      val = val == _val ? val : _val
-      filtro = filtro == _filtro ? filtro : _filtro
+    // year = year == _year ? year : _year
+    // month = month == _month ? month : _month
+    day = day == _day ? day : _day
+    type = type == _type ? type : _type
+    description = description == _description ? description : _description
+    val = val == _val ? val : _val
+    filtro = filtro == _filtro ? filtro : _filtro
     let expense = {
       id,
-    // year,
-    // month,
+      // year,
+      // month,
       day,
       type,
       description,
@@ -150,17 +150,20 @@ let db = new DB()
 function registerExpense() {
   //let year = document.querySelector('#year') // Acessando os elementos do formulário
   //let month = document.querySelector('#month')
-  let day = document.querySelector('#day')
+  let datepicker = document.querySelector('#day')
   let type = document.querySelector('#type')
   let description = document.querySelector('#description')
   let val = document.querySelector('#val')
   let filtro = document.querySelector('#filtro')
 
+  let date = String(datepicker.value).split('/') // Adicionada por causa do datepicker
+  let [ day, month, year ] = date
+  
   let expense = new Expense(
     db.getId(),
-    //year.value,
-    //month.value,
-    day.value,
+    year,
+    month,
+    day,
     type.value,
     description.value,
     val.value,
@@ -173,7 +176,7 @@ function registerExpense() {
     // Limpando os campos do formulário
     //year.value = ''
     //month.value = ''
-    day.value = ''
+    datepicker.value = ''
     type.value = ''
     description.value = ''
     val.value = ''
@@ -215,66 +218,66 @@ function getListDespesas(expense = [], filtred = false) {
 
   expense.forEach(el => {
     // Testa se cada elemento campo filtro = "Despesa"
-    if(el.filtro == "despesa"){
-    let row = tableExpenses.insertRow() // Insere linhas <tr> no body da tabela
+    if (el.filtro == "despesa") {
+      let row = tableExpenses.insertRow() // Insere linhas <tr> no body da tabela
 
-    // Insere colunas <td> nas linhas <tr>
-    row.insertCell(0).innerHTML = `${el.day}`
-    // Tratativa do campo tipo
-    switch (el.type) {
-      case '1':
-        el.type = 'Alimentação'
-        break
-      case '2':
-        el.type = 'Educação'
-        break
-      case '3':
-        el.type = 'Lazer'
-        break
-      case '4':
-        el.type = 'Saúde'
-        break
-      case '5':
-        el.type = 'Transporte'
-        break
-    }
-    row.insertCell(1).innerHTML = el.type
-    row.insertCell(2).innerHTML = el.description
-    row.insertCell(3).innerHTML = el.val
+      // Insere colunas <td> nas linhas <tr>
+      row.insertCell(0).innerHTML = `${el.day}`
+      // Tratativa do campo tipo
+      switch (el.type) {
+        case '1':
+          el.type = 'Alimentação'
+          break
+        case '2':
+          el.type = 'Educação'
+          break
+        case '3':
+          el.type = 'Lazer'
+          break
+        case '4':
+          el.type = 'Saúde'
+          break
+        case '5':
+          el.type = 'Transporte'
+          break
+      }
+      row.insertCell(1).innerHTML = el.type
+      row.insertCell(2).innerHTML = el.description
+      row.insertCell(3).innerHTML = el.val
 
-    let buttonDelete = document.createElement('button')
-    buttonDelete.className = 'btn btn-danger'
-    buttonDelete.innerHTML = '<i class="fa fa-trash-o"></i>'
-    buttonDelete.onclick = () => { // Função que vai deletar despesa
-      db.delete(el.id)
-      messageAlert('success', 'Despesa excluída com sucesso!')
-      setTimeout(() => {
-        document.location.reload()
-      }, 3000)
-    }
+      let buttonDelete = document.createElement('button')
+      buttonDelete.className = 'btn btn-danger'
+      buttonDelete.innerHTML = '<i class="fa fa-trash-o"></i>'
+      buttonDelete.onclick = () => { // Função que vai deletar despesa
+        db.delete(el.id)
+        messageAlert('success', 'Despesa excluída com sucesso!')
+        setTimeout(() => {
+          document.location.reload()
+        }, 3000)
+      }
 
-    let buttonUpdate = document.createElement('button')
-    buttonUpdate.className = 'btn btn-success '
-    buttonUpdate.id = 'update'
-    buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
-    buttonUpdate.onclick = async () => {
-      await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
-      $('#modal').modal('show') // Abre o modal
-      sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
-    }
+      let buttonUpdate = document.createElement('button')
+      buttonUpdate.className = 'btn btn-success '
+      buttonUpdate.id = 'update'
+      buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
+      buttonUpdate.onclick = async () => {
+        await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
+        $('#modal').modal('show') // Abre o modal
+        sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
+      }
 
-    row.insertCell(4).append(buttonDelete, " ", buttonUpdate) // Alocando o elemento button na tabela
+      row.insertCell(4).append(buttonDelete, " ", buttonUpdate) // Alocando o elemento button na tabela
 
-    // let buttonUpdate = document.createElement('button')
-    // buttonUpdate.className = 'btn btn-success '
-    // buttonUpdate.id = 'update'
-    // buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
-    // buttonUpdate.onclick = async () => {
-    //   await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
-    //   $('#modal').modal('show') // Abre o modal
-    //   sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
-    // }
-   // row.insertCell(5).append(buttonDelete)
+      // let buttonUpdate = document.createElement('button')
+      // buttonUpdate.className = 'btn btn-success '
+      // buttonUpdate.id = 'update'
+      // buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
+      // buttonUpdate.onclick = async () => {
+      //   await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
+      //   $('#modal').modal('show') // Abre o modal
+      //   sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
+      // }
+      // row.insertCell(5).append(buttonDelete)
     }
   })
 }
@@ -292,68 +295,68 @@ function getListReceitas(expense = [], filtred = false) {
   }
 
   expense.forEach(el => {
-// Testa se cada elemento campo filtro = "Receita"
-    if(el.filtro == "receita"){
-    let row = tableExpenses.insertRow() // Insere linhas <tr> no body da tabela
+    // Testa se cada elemento campo filtro = "Receita"
+    if (el.filtro == "receita") {
+      let row = tableExpenses.insertRow() // Insere linhas <tr> no body da tabela
 
-    // Insere colunas <td> nas linhas <tr>
-    row.insertCell(0).innerHTML = `${el.day}`
-    // Tratativa do campo tipo
-    switch (el.type) {
-      case '1':
-        el.type = 'Salário'
-        break
-      case '2':
-        el.type = 'Adiantamento'
-        break
-      case '3':
-        el.type = '13º Salário'
-        break
-      case '4':
-        el.type = 'Aplicações'
-        break
-      case '5':
-        el.type = 'Outros'
-        break
+      // Insere colunas <td> nas linhas <tr>
+      row.insertCell(0).innerHTML = `${el.day}`
+      // Tratativa do campo tipo
+      switch (el.type) {
+        case '1':
+          el.type = 'Salário'
+          break
+        case '2':
+          el.type = 'Adiantamento'
+          break
+        case '3':
+          el.type = '13º Salário'
+          break
+        case '4':
+          el.type = 'Aplicações'
+          break
+        case '5':
+          el.type = 'Outros'
+          break
+      }
+      row.insertCell(1).innerHTML = el.type
+      row.insertCell(2).innerHTML = el.description
+      row.insertCell(3).innerHTML = el.val
+
+      let buttonDelete = document.createElement('button')
+      buttonDelete.className = 'btn btn-danger'
+      buttonDelete.innerHTML = '<i class="fa fa-trash-o"></i>'
+      buttonDelete.onclick = () => { // Função que vai deletar despesa
+        db.delete(el.id)
+        messageAlert('success', 'Despesa excluída com sucesso!')
+        setTimeout(() => {
+          document.location.reload()
+        }, 3000)
+      }
+
+      let buttonUpdate = document.createElement('button')
+      buttonUpdate.className = 'btn btn-success '
+      buttonUpdate.id = 'update'
+      buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
+      buttonUpdate.onclick = async () => {
+        await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
+        $('#modal').modal('show') // Abre o modal
+        sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
+      }
+
+      row.insertCell(4).append(buttonDelete, " ", buttonUpdate) // Alocando o elemento button na tabela
+
+      // let buttonUpdate = document.createElement('button')
+      // buttonUpdate.className = 'btn btn-success '
+      // buttonUpdate.id = 'update'
+      // buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
+      // buttonUpdate.onclick = async () => {
+      //   await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
+      //   $('#modal').modal('show') // Abre o modal
+      //   sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
+      // }
+      // row.insertCell(5).append(buttonDelete)
     }
-    row.insertCell(1).innerHTML = el.type
-    row.insertCell(2).innerHTML = el.description
-    row.insertCell(3).innerHTML = el.val
-
-    let buttonDelete = document.createElement('button')
-    buttonDelete.className = 'btn btn-danger'
-    buttonDelete.innerHTML = '<i class="fa fa-trash-o"></i>'
-    buttonDelete.onclick = () => { // Função que vai deletar despesa
-      db.delete(el.id)
-      messageAlert('success', 'Despesa excluída com sucesso!')
-      setTimeout(() => {
-        document.location.reload()
-      }, 3000)
-    }
-
-    let buttonUpdate = document.createElement('button')
-    buttonUpdate.className = 'btn btn-success '
-    buttonUpdate.id = 'update'
-    buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
-    buttonUpdate.onclick = async () => {
-      await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
-      $('#modal').modal('show') // Abre o modal
-      sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
-    }
-
-    row.insertCell(4).append(buttonDelete, " ", buttonUpdate) // Alocando o elemento button na tabela
-
-    // let buttonUpdate = document.createElement('button')
-    // buttonUpdate.className = 'btn btn-success '
-    // buttonUpdate.id = 'update'
-    // buttonUpdate.innerHTML = '<i class="fa fa-edit"</i>'
-    // buttonUpdate.onclick = async () => {
-    //   await showExpenseModal(el.id) //  Aguarda o retorno dos valores para o modal
-    //   $('#modal').modal('show') // Abre o modal
-    //   sessionStorage.setItem('update', el.id) // Salva o "id" da despesa que vai ser atualizada
-    // }
-   // row.insertCell(5).append(buttonDelete)
-   }
   })
 }
 
@@ -361,16 +364,19 @@ function getListReceitas(expense = [], filtred = false) {
 function searchExpense() {
   //let year = document.querySelector('#year') // Acessando os elementos do formulário
   //let month = document.querySelector('#month')
-  let day = document.querySelector('#day')
+  let datepicker = document.querySelector('#day')
   let type = document.querySelector('#type')
   let description = document.querySelector('#description')
   let val = document.querySelector('#val')
+  
+  let date = String(datepicker.value).split('/')
+  let [day, month, year] = date
 
   let expense = new Expense(
     id = '',
     //year.value,
     //month.value,
-    day.value,
+    datepicker.value,
     type.value,
     description.value,
     val.value
@@ -408,63 +414,63 @@ function searchReceita() {
 }
 
 // Função que calcula receitas
-$( document ).ready(function somaReceitas() {
+$(document).ready(function somaReceitas() {
 
   let soma_rc = 0
-  
-  let receita  = db.getAllExpense()
-  
+
+  let receita = db.getAllExpense()
+
   receita.forEach(rc => {
-    if(rc.filtro == "receita"){
+    if (rc.filtro == "receita") {
       soma_rc += parseFloat(rc.val)
     }
   })
-  document.querySelector('#total_receitas').innerHTML = "R$ "+parseFloat(soma_rc)
+  document.querySelector('#total_receitas').innerHTML = "R$ " + parseFloat(soma_rc)
 
 });
 
 // Função que calcula despesas
-$( document ).ready(function somaDespesas() {
+$(document).ready(function somaDespesas() {
 
   let soma_dp = 0
-  
-  let despesa  = db.getAllExpense()
-  
+
+  let despesa = db.getAllExpense()
+
   despesa.forEach(dp => {
-    if(dp.filtro == "despesa"){
+    if (dp.filtro == "despesa") {
       soma_dp += parseFloat(dp.val)
     }
   })
-  document.querySelector('#total_despesas').innerHTML = "R$ "+ parseFloat(soma_dp)
+  document.querySelector('#total_despesas').innerHTML = "R$ " + parseFloat(soma_dp)
 
 });
 
 // Função que calcula balanço
-$( document ).ready(function balanco() {
+$(document).ready(function balanco() {
 
   let balanco = 0
-  
+
   //somando receitas
-  let soma_rc = 0  
-  let receita  = db.getAllExpense() 
+  let soma_rc = 0
+  let receita = db.getAllExpense()
   receita.forEach(rc => {
-    if(rc.filtro == "receita"){
+    if (rc.filtro == "receita") {
       soma_rc += parseFloat(rc.val)
     }
   })
 
   //somando despesas
   let soma_dp = 0
-  let despesa  = db.getAllExpense()
+  let despesa = db.getAllExpense()
   despesa.forEach(dp => {
-    if(dp.filtro == "despesa"){
+    if (dp.filtro == "despesa") {
       soma_dp += parseFloat(dp.val)
     }
   })
 
   //calculando balanço
   balanco = parseFloat(soma_rc) - parseFloat(soma_dp)
-  document.querySelector('#balanco').innerHTML = "R$ "+ parseFloat(balanco)
+  document.querySelector('#balanco').innerHTML = "R$ " + parseFloat(balanco)
 });
 
 // Função que traz os valores da despesa para dentro do modal
