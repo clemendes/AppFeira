@@ -112,16 +112,16 @@ class DB {
     let {
       id,
       day,
-      // year,
-      // month,
+      year,
+      month,
       type,
       description,
       val,
       filtro,
     } = expenseToUpdate
     // Compara se os valores foram alterados
-    // year = year == _year ? year : _year
-    // month = month == _month ? month : _month
+    year = year == _year ? year : _year
+    month = month == _month ? month : _month
     day = day == _day ? day : _day
     type = type == _type ? type : _type
     description = description == _description ? description : _description
@@ -129,8 +129,8 @@ class DB {
     filtro = filtro == _filtro ? filtro : _filtro
     let expense = {
       id,
-      // year,
-      // month,
+      year,
+      month,
       day,
       type,
       description,
@@ -157,8 +157,8 @@ function registerExpense() {
   let filtro = document.querySelector('#filtro')
 
   let date = String(datepicker.value).split('/') // Adicionada por causa do datepicker
-  let [ day, month, year ] = date
-  
+  let [day, month, year] = date
+
   let expense = new Expense(
     db.getId(),
     year,
@@ -170,9 +170,16 @@ function registerExpense() {
     filtro.value
   )
 
+  let getURL, depRec = 'Despesa'
+  getURL = window.location.pathname
+  getURL = getURL.substring(String(getURL).lastIndexOf('/') + 1)
+  if (getURL == 'cadastro_receitas.html') {
+    depRec = 'Receita'
+  }
+
   if (expense.validator()) {
     db.setStorage(expense)
-    messageAlert('success', 'Despesa cadastrada com sucesso!')
+    messageAlert('success', `${depRec} cadastrada com sucesso!`)
     // Limpando os campos do formulário
     //year.value = ''
     //month.value = ''
@@ -183,7 +190,7 @@ function registerExpense() {
   } else {
     messageAlert(
       'danger',
-      'Não foi possível cadastrar sua despesa! Verifique se os campos foram preenchidos!'
+      `Não foi possível cadastrar sua ${depRec}! Verifique se os campos foram preenchidos!`
     )
   }
 }
@@ -222,7 +229,7 @@ function getListDespesas(expense = [], filtred = false) {
       let row = tableExpenses.insertRow() // Insere linhas <tr> no body da tabela
 
       // Insere colunas <td> nas linhas <tr>
-      row.insertCell(0).innerHTML = `${el.day}`
+      row.insertCell(0).innerHTML = `${el.day}/${el.month}/${el.year}`
       // Tratativa do campo tipo
       switch (el.type) {
         case '1':
@@ -291,7 +298,7 @@ function getListReceitas(expense = [], filtred = false) {
     expense = db.getAllExpense()
   }
   else if (expense.length == 0 && filtred == true) { // Pesquisa solicitada, mas não encontrada
-    messageAlert('danger', 'Nenhuma despesa encontrada!')
+    messageAlert('danger', 'Nenhuma receita encontrada!')
   }
 
   expense.forEach(el => {
@@ -368,15 +375,15 @@ function searchExpense() {
   let type = document.querySelector('#type')
   let description = document.querySelector('#description')
   let val = document.querySelector('#val')
-  
+
   let date = String(datepicker.value).split('/')
   let [day, month, year] = date
 
   let expense = new Expense(
     id = '',
-    //year.value,
-    //month.value,
-    datepicker.value,
+    year,
+    month,
+    day,
     type.value,
     description.value,
     val.value
