@@ -102,6 +102,18 @@ class DB {
     return filtredExpenses // Retorna um novo array com as despesas filtradas
   }
 
+  searchByMonth(month) {
+    let filtered = []
+
+    filtered = this.getAllExpense()
+
+    if(month != '') {
+      filtered = filtered.filter(el => el.month == month)
+    }
+
+    return filtered
+  }
+
   delete(id) {
     localStorage.removeItem(id)
   }
@@ -515,4 +527,12 @@ async function updateExpense() {
   setTimeout(() => {
     document.location.reload()
   }, 3000)
+}
+
+function filterExpense() {
+  let filter = document.querySelector('#filter')
+  console.log(filter.value)
+  
+  let filtered = db.searchByMonth(filter.value)
+  console.log(filtered)
 }
