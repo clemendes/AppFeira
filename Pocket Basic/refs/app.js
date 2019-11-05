@@ -319,7 +319,7 @@ function getListReceitas(expense = [], filtred = false) {
       let row = tableExpenses.insertRow() // Insere linhas <tr> no body da tabela
 
       // Insere colunas <td> nas linhas <tr>
-      row.insertCell(0).innerHTML = `${el.day}`
+      row.insertCell(0).innerHTML = `${el.day}/${el.month}`
       // Tratativa do campo tipo
       switch (el.type) {
         case '1':
@@ -411,16 +411,19 @@ function searchExpense() {
 function searchReceita() {
   //let year = document.querySelector('#year') // Acessando os elementos do formulário
   //let month = document.querySelector('#month')
-  let day = document.querySelector('#day')
+  let datepicker = document.querySelector('#day')
   let type = document.querySelector('#type')
   let description = document.querySelector('#description')
   let val = document.querySelector('#val')
 
+  let date = String(datepicker.value).split('/')
+  let [day, month, year] = date
+
   let expense = new Expense(
     id = '',
-    //year.value,
-    //month.value,
-    day.value,
+    year,
+    month,
+    day,
     type.value,
     description.value,
     val.value
@@ -455,7 +458,7 @@ $(document).ready(function somaDespesas() {
 
   let despesa = db.getAllExpense()
 
-  despesa.forEach(dp => {
+  despesa.forEach(dp => { // Podemos trocar por map e usar reduce
     if (dp.filtro == "despesa") {
       soma_dp += parseFloat(dp.val)
     }
@@ -531,8 +534,9 @@ async function updateExpense() {
 
 function filterExpense() {
   let filter = document.querySelector('#filter')
-  console.log(filter.value)
   
   let filtered = db.searchByMonth(filter.value)
-  console.log(filtered)
+  
+  
+  return filtered
 }
