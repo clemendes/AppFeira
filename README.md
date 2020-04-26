@@ -1,4 +1,4 @@
-# Application for managing personal income and expenses.
+## Application for managing personal income and expenses.
 
 <p>
 Application for managing personal income and expenses.
